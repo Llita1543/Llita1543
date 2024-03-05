@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+  <title>Meine erste HTML/CSS Seite</title>
+  <h1> Hello Stranger</h1>
+  <h1> Welcome my side :-) </h1>
+
+<style type="text/css">
+    body {
+      color: rgb(255, 0, 255);
+      background-color: #00ef9f }
+    </style>
+
+</head>
+
+<body>
+
+    <style type="text/css">
+        body 
+          color: rgb(128, 0, 0);
+        </style>
+
+        <h2> Ah, you know me, right?</h2>
+
+    <h2> Yes, I am a DANGEROUS person and it is better stay away from ME !</h2>
+
+    <h3>You believe you know me, yet you don't. You believe you understand me, yet you don't. I've put on a facade, yet you don't notice. Look closely, then you'll recognize who I truly am!</h3>
+
+<h4>Thank you for thinking of me and for opening my account. Nonetheless, I feel honored</h4>
+
+<h5> But I'm here to assist you whenever you need help </h5>
+
+<h6> Do you need help? Yes? Contact me :) </h6>
+
+<h6> Do you need help? No? Wishing you a wonderful day as well! If you need anything else, feel free to ask.</h6>
