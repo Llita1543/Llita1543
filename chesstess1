@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schachspiel</title>
+    <style>
+        .board {
+            display: grid;
+            grid-template-columns: repeat(8, 50px);
+            grid-template-rows: repeat(8, 50px);
+        }
+        .square {
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+        }
+        .white {
+            background-color: #f0d9b5;
+        }
+        .black {
+            background-color: #b58863;
+        }
+    </style>
+</head>
+<body>
+    <h1>Schachspiel</h1>
+    <div class="board">
+        <!-- Obere Reihe mit Buchstaben für die Spalten -->
+        <div class="square"></div>
+        <div class="square">A</div>
+        <div class="square">B</div>
+        <div class="square">C</div>
+        <div class="square">D</div>
+        <div class="square">E</div>
+        <div class="square">F</div>
+        <div class="square">G</div>
+        <div class="square">H</div>
+        
+        <!-- Schachbrett -->
+        <div class="square">8</div>
+        <div class="square white"></div>
+        <div class="square black"></div>
+        <div class="square white"></div>
+        <div class="square black"></div>
+        <div class="square white"></div>
+        <div class="square black"></div>
+        <div class="square white"></div>
+        <div class="square black"></div>
+
+        <div class="square">7</div>
+        <div class="square black"></div>
+        <div class="square white"></div>
+        <div class="square black"></div>
+        <div class="square white"></div>
+        <div class="square black"></div>
+        <div class="square white"></div>
+        <div class="square black"></div>
+        <div class="square white"></div>
+
+        <div class="square">6</div>
+        <!-- Hier setzt du den Rest des Schachbretts fort -->
+    </div>
+</body>
+</html>
