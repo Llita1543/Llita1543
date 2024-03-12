@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz-Spiel</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #0055a4; 
+            background-image: linear-gradient(to right, #0055a4, #ffffff, #ef4135);
+            background-size: cover;
+            font-family: 'Garamond', serif; 
+        }
+
+        #quiz {
+            max-width: 600px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            border-radius: 10px;
+        }
+
+        .question {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .option {
+            margin-bottom: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="quiz">
+        <div class="question">Frage 1: Was ist die Hauptstadt von Frankreich?</div>
+        <div class="options">
+            <div class="option"><input type="radio" name="q1" value="a"> a) Berlin</div>
+            <div class="option"><input type="radio" name="q1" value="b"> b) Paris</div>
+            <div class="option"><input type="radio" name="q1" value="c"> c) London</div>
+        </div>
+        <button onclick="checkAnswer()">Antwort überprüfen</button>
+    </div>
+
+    <script>
+        function checkAnswer() {
+            const selectedAnswer = document.querySelector('input[name="q1"]:checked');
+            if (selectedAnswer) {
+                const answer = selectedAnswer.value;
+                if (answer === 'b') {
+                    alert('Richtig! Paris ist die Hauptstadt von Frankreich.');
+                } else {
+                    alert('Falsch! Versuche es noch einmal.');
+                }
+            } else {
+                alert('Bitte wähle eine Antwort aus.');
+            }
+        }
+    </script>
+</body>
+</html>
