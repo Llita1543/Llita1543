@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minesweeper</title>
+    <style>
+        
+        .cell {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #aa00ff;
+            display: inline-block;
+            text-align: center;
+            line-height: 30px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lore´s Minesweeper</h1>
+    <div id="board"></div>
+
+    <script>
+        const rows = 10;
+        const cols = 10;
+        const mines = 20;
+        let board = [];
+        let revealed = [];
+
+        // Feld erstellen
+        const boardElement = document.getElementById('board');
+        for (let i = 0; i < rows; i++) {
+            let row = [];
+            for (let j = 0; j < cols; j++) {
+                row.push({mine: false, revealed: false, value: 0});
+                const cell = document.createElement('div');
+                cell.classList.add('cell');
+                cell.dataset.row = i;
+                cell.dataset.col = j;
+                cell.addEventListener('click', () => revealCell(i, j));
+                boardElement.appendChild(cell);
+            }
+            board.push(row);
+        }
+
+        // Zufall Minen klicken
+        for (let i = 0; i < mines; i++) {
+            let row, col;
+            do {
+                row = Math.floor(Math.random() * rows);
+                col = Math.floor(Math.random() * cols);
+            } while (board[row][col].mine);
+            board[row][col].mine = true;
+            for (let dr = -1; dr <= 1; dr++) {
+                for (let dc = -1; dc <= 1; dc++) {
+                    if (row + dr >= 0 && row + dr < rows && col + dc >= 0 && col + dc < cols) {
+                        board[row + dr][col + dc].value++;
+                    }
+                }
+            }
+        }
+
+        // Aufdecken 
+        function revealCell(row, col) {
+            if (board[row][col].revealed) return;
+            board[row][col].revealed = true;
+            revealed.push({row, col});
+            const cell = document.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`);
+            if (board[row][col].mine) {
+                cell.textContent = '💣';
+                gameOver();
+            } else {
+                cell.textContent = board[row][col].value === 0 ? '' : board[row][col].value;
+                if (board[row][col].value === 0) {
+                    for (let dr = -1; dr <= 1; dr++) {
+                        for (let dc = -1; dc <= 1; dc++) {
+                            if (row + dr >= 0 && row + dr < rows && col + dc >= 0 && col + dc < cols) {
+                                revealCell(row + dr, col + dc);
+                            }
+                        }
+                    }
+                }
+            }
+            checkWin();
+        }
+
+        // Game over
+        function gameOver() {
+            revealed.forEach(({row, col}) => {
+                const cell = document.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`);
+                if (board[row][col].mine) {
+                    cell.style.backgroundColor = 'red';
+                } else {
+                    cell.textContent = board[row][col].value === 0 ? '' : board[row][col].value;
+                }
+            });
+            setTimeout(() => alert('Game Over!'), 100);
+        }
+
+        // Überprüfe, ob das Spiel verliert oder gewinnt
+        function checkWin() {
+            if (revealed.length === rows * cols - mines) {
+                setTimeout(() => alert('Congratulations, you won!'), 100);
+            }
+        }
+    </script>
+</body>
+</html>
+
