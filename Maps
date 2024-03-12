@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weltkarten-Rätsel</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        #map {
+            width: 800px;
+            height: 400px;
+            background-image: url('world_map.png'); /*bitte eigene Bild einfügen*/
+    
+            background-size: cover;
+            position: relative;
+            cursor: pointer;
+        }
+
+        #marker {
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            font-size: 24px;
+            text-align: center;
+            padding-top: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div id="map">
+        <div id="marker"></div>
+    </div>
+
+    <div id="overlay">
+        <div id="riddle">
+            Welches Land liegt roter Punkt ?
+        </div>
+        <input type="text" id="answer">
+        <button onclick="checkAnswer()">Antwort prüfen</button>
+    </div>
+
+    <script>
+        const marker = document.getElementById('marker');
+        const overlay = document.getElementById('overlay');
+
+       
+        document.getElementById('map').addEventListener('click', (e) => {
+            const x = e.offsetX;
+            const y = e.offsetY;
+
+            
+            overlay.style.display = 'block';
+        });
+
+      
+        function checkAnswer() {
+            const answer = document.getElementById('answer').value.toLowerCase();
+            if (answer === 'zentralafrikanische Pepublik') {
+                alert('Richtig! Zentralafrikanische Republik');
+                overlay.style.display = 'none';
+            } else {
+                alert('Falsch! Versuche es noch einmal.');
+            }
+        }
+    </script>
+</body>
+</html>
