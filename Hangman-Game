@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Llita´s Hangman</title>
+    <style>
+      
+
+    </style>
+</head>
+<body>
+    <h1>LOLITA-Hangman-GAME</h1>
+    <div id="wordToGuess"></div>
+    <div id="letters"></div>
+    <div id="hangman"></div>
+
+    <script>
+        const words = ['ilikeyou', 'iloveyou', 'helloworld', 'deaf', 'peace']; 
+        let wordToGuess = '';
+        let guessedLetters = [];
+        let hangmanStep = 0;
+
+       
+        function selectRandomWord() {
+            return words[Math.floor(Math.random() * words.length)];
+        }
+
+       
+        function newGame() {
+            wordToGuess = selectRandomWord();
+            guessedLetters = [];
+            hangmanStep = 0;
+            updateHangman();
+            updateWordToGuess();
+            updateLetters();
+        }
+
+       
+        function updateWordToGuess() {
+            const displayWord = wordToGuess.split('').map(letter => guessedLetters.includes(letter) ? letter : '_').join(' ');
+            document.getElementById('wordToGuess').textContent = displayWord;
+        }
+
+       
+        function updateLetters() {
+            const letters = 'abcdefghijklmnopqrstuvwxyz';
+            document.getElementById('letters').innerHTML = letters.split('').map(letter =>
+                `<button onclick="guessLetter('${letter}')">${letter}</button>`
+            ).join('');
+        }
+
+      
+        function guessLetter(letter) {
+            guessedLetters.push(letter);
+            if (!wordToGuess.includes(letter)) {
+                hangmanStep++;
+                updateHangman();
+            }
+            updateWordToGuess();
+            updateLetters();
+            checkGameOver();
+        }
+
+       
+        function updateHangman() {
+         
+        }
+
+       
+        function checkGameOver() {
+            if (hangmanStep === 6) {
+                alert('Game over! HAHAHA the word was: ' + wordToGuess);
+                newGame();
+            } else if (!document.getElementById('wordToGuess').textContent.includes('_')) {
+                alert('Congratulations!Well done You guessed the word: ' + wordToGuess);
+                newGame();
+            }
+        }
+
+        
+        window.onload = newGame;
+    </script>
+</body>
+</html>
