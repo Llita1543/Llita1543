@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>erste Quiztest</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, violet, indigo, blue, green, yellow, orange, red);
+        }
+
+        h1 {
+            text-align: center;
+            color: black;
+            margin-top: 20px;
+        }
+
+        #quizForm {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            max-width: 500px;
+        }
+
+        #ergebnisAnzeige {
+            display: none;
+            background-color: #007bff; 
+            color: #fff; 
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        #ergebnisText {
+            color: black; 
+        }
+    </style>
+</head>
+<body>
+    <h1>Mein erste Quiztest</h1>
+    <form id="quizForm">
+        <h2>Frage 1: Was ist die Hauptstadt von Deutschland?</h2>
+        <input type="radio" name="frage1" value="Berlin"> Berlin<br>
+        <input type="radio" name="frage1" value="Paris"> Paris<br>
+        <input type="radio" name="frage1" value="London"> London<br><br>
+        
+        <h2>Frage 2: Welches ist das größte Säugetier der Welt?</h2>
+        <input type="radio" name="frage2" value="Elefant"> Elefant<br>
+        <input type="radio" name="frage2" value="Blauwal"> Blauwal<br>
+        <input type="radio" name="frage2" value="Giraffe"> Giraffe<br><br>
+        
+        <input type="submit" value="Ergebnis anzeigen">
+    </form>
+
+    <div id="ergebnisAnzeige">
+        <h2>Ergebnis</h2>
+        <p id="ergebnisText"></p>
+    </div>
+
+    <script>
+        document.getElementById('quizForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            var frage1Antwort = document.querySelector('input[name="frage1"]:checked').value;
+            var frage2Antwort = document.querySelector('input[name="frage2"]:checked').value;
+
+            var richtigCount = 0;
+
+            if (frage1Antwort === 'Berlin') {
+                richtigCount++;
+            }
+
+            if (frage2Antwort === 'Blauwal') {
+                richtigCount++;
+            }
+
+            var ergebnisText = "Du hast " + richtigCount + " von 2 Fragen richtig beantwortet.";
+
+            document.getElementById('ergebnisText').innerText = ergebnisText;
+            document.getElementById('ergebnisAnzeige').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
