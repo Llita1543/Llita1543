@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schiffe versenken</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        #grid-container {
+            display: grid;
+            grid-template-columns: repeat(10, 50px);
+            grid-template-rows: repeat(10, 50px);
+            gap: 1px;
+        }
+
+        .grid-item {
+            background-color: #cceeff;
+            border: 1px solid #999;
+            text-align: center;
+            line-height: 50px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .hit {
+            background-color: red;
+        }
+
+        .miss {
+            background-color: gray;
+        }
+
+        .ship {
+            background-color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div id="grid-container"></div>
+
+    <script>
+        const gridSize = 10;
+        const gridContainer = document.getElementById('grid-container');
+
+        const playerShips = [
+            { size: 5, positions: [] },
+            { size: 4, positions: [] },
+            { size: 3, positions: [] },
+            { size: 3, positions: [] },
+            { size: 2, positions: [] }
+        ];
+
+        let gameBoard = Array.from({ length: gridSize }, () => Array(gridSize).fill(0));
+        let score = 0;
+
+        function placeShips() {
+            playerShips.forEach(ship => {
+                let isValidPlacement = false;
+                while (!isValidPlacement) {
+                    const direction = Math.random() < 0.5 ? 'horizontal' : 'vertical';
+                    const startRow = Math.floor(Math.random() * gridSize);
+                    const startCol = Math.floor(Math.random() * gridSize);
+
+                    isValidPlacement = checkShipPlacement(startRow, startCol, ship.size, direction);
+                    if (isValidPlacement) {
+                        ship.positions = [];
+                        for (let i = 0; i < ship.size; i++) {
+                            if (direction === 'horizontal') {
+                                ship.positions.push({ row: startRow, col: startCol + i });
+                            } else {
+                                ship.positions.push({ row: startRow + i, col: startCol });
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function checkShipPlacement(startRow, startCol, size, direction) {
+            if (direction === 'horizontal' && startCol + size > gridSize) {
+                return false;
+            }
+            if (direction === 'vertical' && startRow + size > gridSize) {
+                return false;
+            }
+            for (let i = 0; i < size; i++) {
+                if (direction === 'horizontal' && gameBoard[startRow][startCol + i] !== 0) {
+                    return false;
+                }
+                if (direction === 'vertical' && gameBoard[startRow + i][startCol] !== 0) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function updateGrid() {
+            for (let i = 0; i < gridSize; i++) {
+                for (let j = 0; j < gridSize; j++) {
+                    const cell = document.querySelector(`[data-row="${i}"][data-col="${j}"]`);
+                    if (gameBoard[i][j] === 1) {
+                        cell.classList.add('hit');
+                    } else if (gameBoard[i][j] === -1) {
+                        cell.classList.add('miss');
+                    }
+                }
+            }
+        }
+
+        function handleClick(event) {
+            const row = parseInt(event.target.dataset.row);
+            const col = parseInt(event.target.dataset.col);
+
+            if (gameBoard[row][col] === 0) {
+                let isHit = false;
+                playerShips.forEach(ship => {
+                    ship.positions.forEach(pos => {
+                        if (pos.row === row && pos.col === col) {
+                            gameBoard[row][col] = 1;
+                            isHit = true;
+                            score += 10;
+                        }
+                    });
+                });
+                if (!isHit) {
+                    gameBoard[row][col] = -1;
+                }
+            }
+
+            updateGrid();
+        }
+
+        for (let i = 0; i < gridSize; i++) {
+            for (let j = 0; j < gridSize; j++) {
+                const gridItem = document.createElement('div');
+                gridItem.className = 'grid-item';
+                gridItem.dataset.row = i;
+                gridItem.dataset.col = j;
+                gridItem.addEventListener('click', handleClick);
+                gridContainer.appendChild(gridItem);
+            }
+        }
+
+        placeShips();
+    </script>
+</body>
+</html>
